@@ -77,7 +77,8 @@
      prompt: "startup or stop servers? [default: startup] "
      private: no
      default: 'startup'
-
+  tasks:
+    
   - name: "{{ select }} tasks starting"
     shell: nohup "./{{ select }}.sh"
     args:
