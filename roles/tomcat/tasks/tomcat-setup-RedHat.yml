@@ -46,7 +46,7 @@
     remote_src: yes
     extra_opts: "--strip-components=1"
     creates: "/home/{{ remote_user }}/{{ instance }}/bin"
-
+#------------------------------------------------------------------------------#
 - name: Copy tomcat variable file setenv.sh
   template:
     src: templates/setenv.sh
@@ -70,7 +70,7 @@
   with_items:
     - "/home/{{ remote_user }}/{{ instance }}/webapps/host-manager/META-INF/context.xml"
     - "/home/{{ remote_user }}/{{ instance }}/webapps/manager/META-INF/context.xml"
-
+#-------------------------------------------------------------------------------#
 # 톰캣 시작 또는 중지
  - name: startup or stop servers
    vars_prompt:
