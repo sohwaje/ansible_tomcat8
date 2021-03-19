@@ -13,15 +13,15 @@
     name: java-1.8.0-openjdk
     state: present
 
-- name: Add tomcat group
+- name: Add "{{ remote_user }}"  group
   group:
-    name: tomcat
+    name: "{{ remote_user }}"
 
-- name: Add "tomcat" user
+- name: Add "{{ remote_user }}" user
   user:
-    name: tomcat
-    group: tomcat
-    home: /usr/share/tomcat
+    name: "{{ remote_user }}"
+    group: "{{ remote_user }}"
+    home: "/home/{{ remote_user }}/{{ instance }}"
     createhome: no
     system: yes
 
@@ -32,61 +32,54 @@
 
 - name: Create a tomcat directory
   file:
-    path: /usr/share/tomcat
+    path: "/home/{{ remote_user }}/{{ instance }}"
     state: directory
-    owner: tomcat
-    group: tomcat
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
 
 - name: Extract tomcat archive
   unarchive:
     src: "{{ tomcat_archive_dest }}"
-    dest: /usr/share/tomcat
-    owner: tomcat
-    group: tomcat
+    dest: "/home/{{ remote_user }}/{{ instance }}"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
     remote_src: yes
     extra_opts: "--strip-components=1"
-    creates: /usr/share/tomcat/bin
+    creates: "/home/{{ remote_user }}/{{ instance }}/bin"
 
-- name: Copy tomcat service file
+- name: Copy tomcat variable file setenv.sh
   template:
-    src: templates/tomcat.service.j2
-    dest: /etc/systemd/system/tomcat.service
-  when: ansible_service_mgr == "systemd"
+    src: templates/setenv.sh
+    dest: "/home/{{ remote_user }}/{{ instance }}/bin"
 
-- name: Start and enable tomcat
-  service:
-    daemon_reload: yes
-    name: tomcat
-    state: started
-    enabled: yes
-  when: ansible_service_mgr == "systemd"
-
-- name: Start and enable firewalld
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
-  when: ansible_service_mgr == "systemd"
-
-- name: Open tomcat port on the firewall
-  firewalld:
-    port: 8080/tcp
-    permanent: true
-    state: enabled
-    immediate: yes
-  when: ansible_service_mgr == "systemd"
+- name: Copy server.xml
+  template:
+    sec: templates/server.xml
+    dest: "/home/{{ remote_user }}/{{ instance }}/conf"
 
 - name: Set UI access credentials
   template:
     src: tomcat-users.xml.j2
-    dest: /usr/share/tomcat/conf/tomcat-users.xml
+    dest: "/home/{{ remote_user }}/{{ instance }}/conf/tomcat-users.xml"
   notify: restart tomcat
 
 - name: Allow access to Manager and Host Manager apps from any IP
   template:
-    src: context.xml.j2 
+    src: context.xml.j2
     dest: "{{ item }}"
   with_items:
-    - /usr/share/tomcat/webapps/host-manager/META-INF/context.xml
-    - /usr/share/tomcat/webapps/manager/META-INF/context.xml
-  notify: restart tomcat
+    - "/home/{{ remote_user }}/{{ instance }}/webapps/host-manager/META-INF/context.xml"
+    - "/home/{{ remote_user }}/{{ instance }}/webapps/manager/META-INF/context.xml"
+
+# 톰캣 시작 또는 중지
+ - name: startup or stop servers
+   vars_prompt:
+     - name: select
+       prompt: "startup or stop servers? [default: startup] "
+       private: no
+       default: 'startup'
+
+  - name: "{{ select }} tasks starting"
+    shell: sh "./{{ select }}.sh"
+    args:
+      chdir: "/home/{{ remote_user }}/{{ instance }}/bin"
