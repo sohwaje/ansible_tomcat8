@@ -72,11 +72,11 @@
     - "/home/{{ remote_user }}/{{ instance }}/webapps/manager/META-INF/context.xml"
 #-------------------------------------------------------------------------------#
 # 톰캣 시작 또는 중지
-   vars_prompt:
-     - name: select
-       prompt: "startup or stop servers? [default: startup] "
-       private: no
-       default: 'startup'
+  vars_prompt:
+   - name: select
+     prompt: "startup or stop servers? [default: startup] "
+     private: no
+     default: 'startup'
 
   - name: "{{ select }} tasks starting"
     shell: nohup "./{{ select }}.sh"
