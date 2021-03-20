@@ -63,7 +63,7 @@
 
 - name: Copy mysql-commector
   file:
-    template: templates/mysql-connector-java-8.0.21.jar
+    src: templates/mysql-connector-java-8.0.21.jar
     dst: "{{ tomcat_dir }}/lib"
 
 - name: Copy tomcat-extension
@@ -74,7 +74,7 @@
 - name: Copy ROOT.xml
   template:
     src: templates/ROOT.xml
-    dst: "{{ tomcat_dir }}/conf/Catalina/localhost/ROOT.xml
+    dst: "{{ tomcat_dir }}/conf/Catalina/localhost/ROOT.xml"
 
 - name: Copy server.xml
   template:
