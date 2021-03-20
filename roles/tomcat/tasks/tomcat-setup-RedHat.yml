@@ -62,12 +62,12 @@
     mode: '0755'
 
 - name: Copy mysql-commector
-  template:
+  copy:
     src: templates/mysql-connector-java-8.0.21.jar
     dst: "{{ tomcat_dir }}/lib/mysql-connector-java-8.0.21.jar"
 
 - name: Copy tomcat-extension
-  template:
+  copy:
     src: templates/tomcat-extensions.jar
     dst: "{{ tomcat_dir }}/lib/tomcat-extensions.jar"
 
