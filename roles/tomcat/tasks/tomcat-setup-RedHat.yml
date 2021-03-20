@@ -57,7 +57,7 @@
     dest: "{{ tomcat_dir }}/bin/setenv.sh"
 
 - name: Give execute permission
-  template:
+  file:
     path: "{{ tomcat_dir }}/bin/setenv.sh"
     mode: '0755'
 
