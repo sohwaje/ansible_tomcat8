@@ -67,16 +67,3 @@
   with_items:
     - "{{ tomcat_dir }}/webapps/host-manager/META-INF/context.xml"
     - "{{ tomcat_dir }}/webapps/manager/META-INF/context.xml"
-
-
-- name: Start application
-  shell: "{{ tomcat_dir }}/bin/startup.sh"
-  args:
-  chdir: "/tmp"
-  executable: "/bin/bash"
-- name: Start Tomcat
-  command: "nohup {{ tomcat_dir }}/bin/startup.sh"
-  tags: starttom
-- name: Stop Tomcat
-  command: "nohup {{ tomcat_dir }}/bin/shutdown.sh"
-  tags: stoptom
