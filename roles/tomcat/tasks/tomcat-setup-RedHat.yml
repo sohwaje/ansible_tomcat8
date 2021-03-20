@@ -57,12 +57,12 @@
     dest: "{{ tomcat_dir }}/bin/setenv.sh"
 
 - name: Give execute permission
-  file:
+  template:
     path: "{{ tomcat_dir }}/bin/setenv.sh"
     mode: '0755'
 
 - name: Copy mysql-commector
-  file:
+  template:
     src: templates/mysql-connector-java-8.0.21.jar
     dst: "{{ tomcat_dir }}/lib"
 
