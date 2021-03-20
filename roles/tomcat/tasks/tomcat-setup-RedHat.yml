@@ -50,6 +50,11 @@
     src: templates/setenv.sh
     dest: "{{ tomcat_dir }}/bin/setenv.sh"
 
+- name: Give execute permission
+  file:
+    path: "{{ tomcat_dir }}/bin/setenv.sh"
+    mode: '0755'
+
 - name: Copy server.xml
   template:
     src: templates/server.xml
