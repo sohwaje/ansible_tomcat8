@@ -67,3 +67,11 @@
   with_items:
     - "{{ tomcat_dir }}/webapps/host-manager/META-INF/context.xml"
     - "{{ tomcat_dir }}/webapps/manager/META-INF/context.xml"
+
+- name: Tomcat start
+  shell: nohup "{{ tomcat_dir }}/bin/startup.sh"
+
+- name: wait for port 8080
+  wait_for:
+    port: 8080
+    delay: 20
