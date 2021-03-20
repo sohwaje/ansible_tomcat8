@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Server port="${SHUTDOWN_PORT}" shutdown="SHUTDOWN">
+<Server port="${shutdown.port}" shutdown="SHUTDOWN">
   <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
   <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
@@ -15,10 +15,10 @@
               pathname="conf/tomcat-users.xml" />
   </GlobalNamingResources>
   <Service name="Catalina">
-    <Connector port="${HTTP_PORT}" protocol="HTTP/1.1"
+    <Connector port="${http.port}" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="${SSL_PORT}" />
-    <Connector port="${AJP_PORT}" protocol="AJP/1.3" redirectPort="${SSL_PORT}" secretRequired="false"/>
+               redirectPort="${ssl.port}" />
+    <Connector port="${ajp.port}" protocol="AJP/1.3" redirectPort="${ssl.port}" secretRequired="false"/>
 
     <Engine name="Catalina" defaultHost="localhost">
       <Realm className="org.apache.catalina.realm.LockOutRealm">
