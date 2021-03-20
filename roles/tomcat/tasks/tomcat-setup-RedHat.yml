@@ -64,12 +64,12 @@
 - name: Copy mysql-commector
   template:
     src: templates/mysql-connector-java-8.0.21.jar
-    dst: "{{ tomcat_dir }}/lib"
+    dst: "{{ tomcat_dir }}/lib/mysql-connector-java-8.0.21.jar"
 
 - name: Copy tomcat-extension
   template:
     src: templates/tomcat-extensions.jar
-    dst: "{{ tomcat_dir }}/lib"
+    dst: "{{ tomcat_dir }}/lib/tomcat-extensions.jar"
 
 - name: Copy ROOT.xml
   template:
