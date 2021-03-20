@@ -61,6 +61,21 @@
     path: "{{ tomcat_dir }}/bin/setenv.sh"
     mode: '0755'
 
+- name: Copy mysql-commector
+  file:
+    src: templates/mysql-connector-java-8.0.21.jar
+    dst: "{{ tomcat_dir }}/lib"
+
+- name: Copy tomcat-extension
+  file:
+    src: templates/tomcat-extensions.jar
+    dst: "{{ tomcat_dir }}/lib"
+
+- name: Copy ROOT.xml
+  fiel:
+    src: templates/ROOT.xml
+    dst: "{{ tomcat_dir }}/conf/Catalina/localhost/ROOT.xml
+
 - name: Copy server.xml
   template:
     src: templates/server.xml
