@@ -27,7 +27,7 @@
   user:
     name: '{{ remote_user }}'
     group: '{{ remote_user }}'
-    home: '/home/{{ remote_user }}/{{ instance }}'
+    home: '{{ instance_dir }}'
     createhome: no
     system: yes
 
@@ -38,7 +38,7 @@
 
 - name: Create a tomcat directory
   file:
-    path: '/home/{{ remote_user }}/{{ instance }}'
+    path: '{{ instance_dir }}'
     state: directory
     owner: '{{ remote_user }}'
     group: '{{ remote_user }}'
@@ -46,35 +46,35 @@
 - name: Extract tomcat archive
   unarchive:
     src: '{{ tomcat_archive_dest }}'
-    dest: '/home/{{ remote_user }}/{{ instance }}'
+    dest: '{{ instance_dir }}'
     owner: '{{ remote_user }}'
     group: '{{ remote_user }}'
     remote_src: yes
     extra_opts: '--strip-components=1'
-    creates: '/home/{{ remote_user }}/{{ instance }}/bin'
+    creates: '{{ tomcat_dir }}/bin'
 #------------------------------------------------------------------------------#
 - name: Copy tomcat variable file setenv.sh
   template:
     src: templates/setenv.sh
-    dest: '/home/{{ remote_user }}/{{ instance }}/bin'
+    dest: '{{ tomcat_dir }}/bin'
 
 - name: Copy server.xml
   template:
     src: templates/server.xml
-    dest: '/home/{{ remote_user }}/{{ instance }}/conf'
+    dest: '{{ tomcat_dir }}/conf'
 
 - name: Set UI access credentials
   template:
     src: tomcat-users.xml.j2
-    dest: '/home/{{ remote_user }}/{{ instance }}/conf/tomcat-users.xml'
+    dest: '{{ tomcat_dir }}/conf/tomcat-users.xml'
 
 - name: Allow access to Manager and Host Manager apps from any IP
   template:
     src: context.xml.j2
-    dest: '{{ item }}'
+    dest: "{{ item }}"
   with_items:
-    - '/home/{{ remote_user }}/{{ instance }}/webapps/host-manager/META-INF/context.xml'
-    - '/home/{{ remote_user }}/{{ instance }}/webapps/manager/META-INF/context.xml'
+    - '{{ tomcat_dir }}/webapps/host-manager/META-INF/context.xml'
+    - '{{ tomcat_dir }}/webapps/manager/META-INF/context.xml'
 #-------------------------------------------------------------------------------#
 # 톰캣 시작 또는 중지
   vars_prompt:
@@ -87,7 +87,7 @@
   - name: '{{ select }} tasks starting'
     shell: nohup './{{ select }}.sh'
     args:
-      chdir: '/home/{{ remote_user }}/{{ instance }}/bin'
+      chdir: '{{ tomcat_dir }}/bin'
 
   - debug:
       msg:
