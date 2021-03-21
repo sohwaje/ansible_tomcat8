@@ -1,4 +1,7 @@
-- name: restart tomcat
-  service:
-    name: tomcat
-    state: restarted
+- name: Tomcat start
+  shell: nohup "{{ tomcat_dir }}/bin/startup.sh"
+
+- name: wait for port 8080
+  wait_for:
+    port: 8080
+    delay: 20
