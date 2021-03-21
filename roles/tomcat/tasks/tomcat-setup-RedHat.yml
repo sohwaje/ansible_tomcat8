@@ -107,4 +107,4 @@
   with_items:
     - "{{ tomcat_dir }}/webapps/host-manager/META-INF/context.xml"
     - "{{ tomcat_dir }}/webapps/manager/META-INF/context.xml"
-  notify: Tomcat start
+  notify: restart tomcat
