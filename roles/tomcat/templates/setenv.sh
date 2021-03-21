@@ -2,7 +2,7 @@
 export DATE=`date +%Y%m%d%H%M%S`
 #[2] TOMCAT Port & values
 # Tomcat Port 설정
-export PORT_OFFSET=0
+export PORT_OFFSET="{{ PORT_OFFSET }}"
 export HTTP_PORT=$(expr 8080 + $PORT_OFFSET)
 export AJP_PORT=$(expr 8009 + $PORT_OFFSET)
 export SSL_PORT=$(expr 8443 + $PORT_OFFSET)
