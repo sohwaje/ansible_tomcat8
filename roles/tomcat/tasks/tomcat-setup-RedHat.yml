@@ -60,7 +60,7 @@
 - name: Start and enable tomcat
   service:
     daemon_reload: yes
-    name: {{ instance }}
+    name: "{{ instance }}"
     state: started
     enabled: yes
   when: ansible_service_mgr == "systemd"
