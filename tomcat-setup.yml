@@ -1,7 +1,7 @@
 ---
 - name: Tomcat deployment playbook
   hosts: "{{ hosts }}"      # Inventory hosts group / server to act on
-
+  become: yes
   remote_user:  "{{ remote_user }}"         # Update username for remote server
   vars:
     tomcat_ver: 8.5.8                          # Tomcat version to install
