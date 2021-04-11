@@ -39,6 +39,8 @@
   file:
     path: "{{ source_dir }}"
     state: directory
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
     mode: '0755'
 
 - name: Extract tomcat archive
@@ -89,16 +91,22 @@
   template:
     src: templates/ROOT.xml
     dest: "{{ tomcat_dir }}/conf/Catalina/localhost/ROOT.xml"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
 
 - name: Copy server.xml
   template:
     src: templates/server.xml
     dest: "{{ tomcat_dir }}/conf/server.xml"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
 
 - name: Set UI access credentials
   template:
     src: templates/tomcat-users.xml.j2
     dest: "{{ tomcat_dir }}/conf/tomcat-users.xml"
+    owner: "{{ remote_user }}"
+    group: "{{ remote_user }}"
 
 - name: Allow access to Manager and Host Manager apps from any IP
   template:
