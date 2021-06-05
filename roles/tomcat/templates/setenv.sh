@@ -21,8 +21,8 @@ export LOG_HOME=$CATALINA_BASE/logs
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CATALINA_HOME/lib
 # export SCOUTER_AGENT_DIR="/home/sigongweb/work/agent.java"
 #[5] JVM Options : Memory
-export JAVA_OPTS="$JAVA_OPTS -Xms4096m"
-export JAVA_OPTS="$JAVA_OPTS -Xmx4096m"
+export JAVA_OPTS="$JAVA_OPTS -Xms2048m"
+export JAVA_OPTS="$JAVA_OPTS -Xmx2048m"
 export JAVA_OPTS="$JAVA_OPTS -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m"
 #[6] G1 GC OPTIONS ###
 export JAVA_OPTS="$JAVA_OPTS -XX:+UseG1GC"
