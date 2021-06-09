@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <Context crossContext="true" path=""  docBase="/home/azureuser/webapps/ota" reloadable="true"
+        <Context crossContext="true" path=""  docBase="/home/azureuser/webapps/iscreamkids/ROOT" reloadable="true"
                 privileged="true" antiResourceLocking="false" antiJARLocking="false">
 
 <!-- DB 정보 -->
